@@ -11,9 +11,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/ben-sab/go-guerrilla/mail/rfc5321"
 	"github.com/flashmob/go-guerrilla/log"
 	"github.com/flashmob/go-guerrilla/mail"
-	"github.com/flashmob/go-guerrilla/mail/rfc5321"
 	"github.com/flashmob/go-guerrilla/response"
 )
 
@@ -53,7 +53,7 @@ type client struct {
 	// guards access to conn
 	connGuard sync.Mutex
 	log       log.Logger
-	parser    rfc5321.Parser
+	parser    rfc5321.AddressParser
 }
 
 // NewClient allocates a new client.
@@ -216,20 +216,20 @@ func (c *client) parsePath(in []byte, p pathParser) (mail.Address, error) {
 	}
 	if err = p(in); err != nil {
 		return address, errors.New(response.Canned.FailInvalidAddress.String())
-	} else if c.parser.NullPath {
+	} else if c.parser.(*rfc5321.Parser).NullPath {
 		// bounce has empty from address
 		address = mail.Address{}
-	} else if len(c.parser.LocalPart) > rfc5321.LimitLocalPart {
+	} else if len(c.parser.(*rfc5321.Parser).LocalPart) > rfc5321.LimitLocalPart {
 		err = errors.New(response.Canned.FailLocalPartTooLong.String())
-	} else if len(c.parser.Domain) > rfc5321.LimitDomain {
+	} else if len(c.parser.(*rfc5321.Parser).Domain) > rfc5321.LimitDomain {
 		err = errors.New(response.Canned.FailDomainTooLong.String())
 	} else {
 		address = mail.Address{
-			User:       c.parser.LocalPart,
-			Host:       c.parser.Domain,
-			ADL:        c.parser.ADL,
-			PathParams: c.parser.PathParams,
-			NullPath:   c.parser.NullPath,
+			User:       c.parser.(*rfc5321.Parser).LocalPart,
+			Host:       c.parser.(*rfc5321.Parser).Domain,
+			ADL:        c.parser.(*rfc5321.Parser).ADL,
+			PathParams: c.parser.(*rfc5321.Parser).PathParams,
+			NullPath:   c.parser.(*rfc5321.Parser).NullPath,
 		}
 	}
 	return address, err

@@ -472,7 +472,7 @@ func (s *server) handleClient(client *client) {
 					s.log().WithError(err).Error("MAIL parse error", "["+string(input[10:])+"]")
 					client.sendResponse(err)
 					break
-				} else if client.parser.NullPath {
+				} else if client.parser.(*rfc5321.Parser).NullPath {
 					// bounce has empty from address
 					client.MailFrom = mail.Address{}
 				}
