@@ -11,7 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ben-sab/go-guerrilla/mail/rfc5321"
+	"go-guerrilla/mail/rfc5321"
+
 	"github.com/flashmob/go-guerrilla/log"
 	"github.com/flashmob/go-guerrilla/mail"
 	"github.com/flashmob/go-guerrilla/response"

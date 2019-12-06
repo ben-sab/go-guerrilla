@@ -8,8 +8,14 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/ben-sab/go-guerrilla"
+  packages = ["mail/rfc5321"]
+  revision = "51f7dda326b1e9878e5f679ccb34a134127951b0"
+
+[[projects]]
+  branch = "master"
   name = "github.com/flashmob/go-guerrilla"
-  packages = [".","backends","backends/storage/redigo","log","mail","mail/encoding","mail/rfc5321","response","tests","tests/testcert"]
+  packages = [".","backends","backends/storage/redigo","log","mail","mail/encoding","mail/rfc5321","mocks","response","tests","tests/testcert"]
   revision = "51f7dda326b1e9878e5f679ccb34a134127951b0"
 
 [[projects]]
@@ -86,6 +92,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a2d246a9aef0dbe165f3eb4ad7214bb8bd88a2af2b98d20f7685f861521f7f8c"
+  inputs-digest = "ff5d1e3dd436eded24e196f8cd0a394088a4cef42ee104ea0d479ed0f4368f9e"
   solver-name = "gps-cdcl"
   solver-version = 1
